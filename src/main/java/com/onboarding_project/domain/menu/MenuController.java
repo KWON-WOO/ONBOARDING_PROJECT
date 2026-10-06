@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MenuController {
 
-    private final MenuService MenuService;
+    private final MenuService menuService;
 
 
 }

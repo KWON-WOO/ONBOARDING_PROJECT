@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Entity
 @Table(name = "menus")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu extends BaseSoftDeleteEntity {

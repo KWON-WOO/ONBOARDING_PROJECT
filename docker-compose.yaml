@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:18
+    env_file:
+      - .env
+    container_name: onboarding-postgres
+    restart: always
+    ports:
+      - "${DB_NAME}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME} # 기본 DB 이름
+      TZ: Asia/Seoul   # 한국 시간대 설정
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata: # Named Volume 선언
