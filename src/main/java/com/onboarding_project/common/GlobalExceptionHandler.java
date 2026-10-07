@@ -1,8 +1,11 @@
 package com.onboarding_project.common;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // 일반적인 예외처리
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<CommonResponse<Void>> handleException(CustomException e) {
         log.error("예외 발생. ", e);
@@ -19,6 +23,37 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(e.getErrorCode().getStatus()).body(response);
     }
 
+    // Validation 조건 미충족 시 예외처리
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CommonResponse<Void>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("예외 발생. ", e);
+
+        String message = e.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
+
+        CommonResponse<Void> response = CommonResponse.exception(message);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 요청 형식이 맞지 않을 경우. (예: Enum 타입과 맞지 않은 입력값 혹은 올바르지 않은 json 형태의 요청값 등)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<CommonResponse<Void>> httpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error("예외 발생. ", e);
+
+        Throwable specificCause = NestedExceptionUtils.getMostSpecificCause(e);
+
+        if (specificCause instanceof CustomException customException) {
+            ErrorCode errorCode = customException.getErrorCode();
+            CommonResponse<Void> response = CommonResponse.exception(errorCode.getMessage());
+            return ResponseEntity.status(errorCode.getStatus()).body(response);
+        }
+
+        CommonResponse<Void> response = CommonResponse.exception("요청 본문 형식이 올바르지 않습니다");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 그 이외의 예외처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CommonResponse<Void>> exception(Exception e) {
         log.error("예외 발생. ", e);

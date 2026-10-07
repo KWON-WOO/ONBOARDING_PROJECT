@@ -46,7 +46,7 @@ public class UserService {
                 () -> new CustomException(NOT_FOUND_USER)
         );
 
-        if (passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new CustomException(MISMATCH_PASSWORD);
         }
 

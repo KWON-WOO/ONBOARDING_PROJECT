@@ -18,7 +18,7 @@ public class CreateUserRequest {
     private String username;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
-    @Size(max = 255, message = "비밀번호를 255자 이내로 입력해주세요.")
+    @Size(max = 50, message = "비밀번호를 50자 이내로 입력해주세요.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$",
             message = "비밀번호는 8자 이상, 영문, 숫자, 특수문자를 최소 1개씩 포함해야합니다.")
     private String password;

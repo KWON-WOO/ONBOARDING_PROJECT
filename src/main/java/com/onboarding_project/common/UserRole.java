@@ -13,7 +13,6 @@ public enum UserRole {
                 return role;
             }
         }
-
         throw new CustomException(ErrorCode.MISMATCH_USER_ROLE);
     }
 }
