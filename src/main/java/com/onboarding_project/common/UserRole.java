@@ -1,21 +1,19 @@
 package com.onboarding_project.common;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum UserRole {
-    CUSTOMER(Authority.CUSTOMER),
-    OWNER(Authority.OWNER);
+    CUSTOMER, OWNER;
 
-    private final String authority;
+    // 처리할 수 없는 UserRole이 들어올 시 예외처리 발생.
+    @JsonCreator
+    public static UserRole from(String value) {
+        for (UserRole role : UserRole.values()) {
+            if (role.name().equalsIgnoreCase(value)) {
+                return role;
+            }
+        }
 
-    UserRole(String authority) {
-        this.authority = authority;
-    }
-
-    public String getAuthority() {
-        return this.authority;
-    }
-
-    public static class Authority {
-        public static final String CUSTOMER = "ROLE_CUSTOMER";
-        public static final String OWNER = "ROLE_OWNER";
+        throw new CustomException(ErrorCode.MISMATCH_USER_ROLE);
     }
 }

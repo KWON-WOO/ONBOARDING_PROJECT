@@ -1,6 +1,7 @@
 package com.onboarding_project.domain.menu;
 
 import com.onboarding_project.common.BaseSoftDeleteEntity;
+import com.onboarding_project.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,6 +15,11 @@ public class Menu extends BaseSoftDeleteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // 판매자 외래키
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String name;
