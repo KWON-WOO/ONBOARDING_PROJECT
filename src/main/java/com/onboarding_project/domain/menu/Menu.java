@@ -36,4 +36,10 @@ public class Menu extends BaseSoftDeleteEntity {
         this.description = description;
         this.price = price;
     }
+
+    public void update(String name, String description, Integer price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

@@ -47,7 +47,10 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signup", "/signin").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/menu", "/menu/{menuId}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/menu").hasRole("OWNER")
+                        .requestMatchers(HttpMethod.PUT, "/menu").hasRole("OWNER")
+                        .requestMatchers(HttpMethod.DELETE, "/menu").hasRole("OWNER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception

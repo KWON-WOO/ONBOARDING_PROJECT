@@ -24,6 +24,8 @@ public enum ErrorCode {
 
     NOT_FOUND_MENU(HttpStatus.NOT_FOUND, "존재하지 않는 메뉴입니다."),
 
+    NOT_MENU_OWNER(HttpStatus.FORBIDDEN, "본인의 메뉴만 수정 및 삭제할 수 있습니다."),
+
     ;
 
     private final HttpStatus status;

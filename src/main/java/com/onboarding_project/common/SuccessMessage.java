@@ -10,6 +10,8 @@ public enum SuccessMessage {
     MENU_CREATE_SUCCESS("메뉴 생성 성공"),
     MENU_GET_SUCCESS("메뉴 조회 성공"),
     MENU_LIST_GET_SUCCESS("메뉴 목록 조회 성공"),
+    MENU_UPDATE_SUCCESS("메뉴 수정 성공"),
+    MENU_DELETE_SUCCESS("메뉴 삭제 성공"),
     ;
 
     private final String message;
