@@ -26,6 +26,25 @@ public enum ErrorCode {
 
     NOT_MENU_OWNER(HttpStatus.FORBIDDEN, "본인의 메뉴만 수정 및 삭제할 수 있습니다."),
 
+    NOT_FOUND_ORDER(HttpStatus.NOT_FOUND, "존재하지 않는 주문입니다."),
+
+    NOT_ORDER_OWNER(HttpStatus.FORBIDDEN, "본인의 주문만 취소할 수 있습니다."),
+
+    NOT_MENU_ORDER_OWNER(HttpStatus.FORBIDDEN, "본인 메뉴에 들어온 주문만 변경할 수 있습니다."),
+
+    ORDER_NOT_CANCELABLE(HttpStatus.CONFLICT, "주문 요청 상태에서만 취소할 수 있습니다."),
+
+    INVALID_ORDER_STATUS_CHANGE(HttpStatus.CONFLICT, "허용되지 않는 주문 상태 변경입니다."),
+
+    NOT_PAYMENT_ORDER_OWNER(HttpStatus.FORBIDDEN, "본인의 주문만 결제할 수 있습니다."),
+
+    INVALID_PAYMENT_TYPE(HttpStatus.BAD_REQUEST, "유효하지 않은 결제 수단입니다."),
+
+    UNSUPPORTED_PAYMENT_TYPE(HttpStatus.BAD_REQUEST, "카드 결제만 가능합니다."),
+
+    ORDER_NOT_PAYABLE(HttpStatus.CONFLICT, "주문 요청 상태에서만 결제할 수 있습니다."),
+
+    ORDER_CONFLICT(HttpStatus.CONFLICT, "다른 요청에 의해 주문이 변경되었습니다. 다시 시도해주세요."),
     ;
 
     private final HttpStatus status;

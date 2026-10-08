@@ -12,6 +12,11 @@ public enum SuccessMessage {
     MENU_LIST_GET_SUCCESS("메뉴 목록 조회 성공"),
     MENU_UPDATE_SUCCESS("메뉴 수정 성공"),
     MENU_DELETE_SUCCESS("메뉴 삭제 성공"),
+    ORDER_CREATE_SUCCESS("주문 생성 성공"),
+    ORDER_LIST_GET_SUCCESS("주문 목록 조회 성공"),
+    ORDER_CANCEL_SUCCESS("주문 취소 성공"),
+    ORDER_STATUS_UPDATE_SUCCESS("주문 상태 변경 성공"),
+    PAYMENT_SUCCESS("결제 성공"),
     ;
 
     private final String message;

@@ -3,6 +3,7 @@ package com.onboarding_project.common.exception;
 import com.onboarding_project.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -52,6 +53,16 @@ public class GlobalExceptionHandler {
         CommonResponse<Void> response = CommonResponse.exception("요청 본문 형식이 올바르지 않습니다");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    // 동시 수정 충돌 (낙관적 락) → 409
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<CommonResponse<Void>>
+    optimisticLockingFailureException(OptimisticLockingFailureException e) {
+        log.error("예외 발생. ", e);
+        ErrorCode errorCode = ErrorCode.ORDER_CONFLICT;
+        CommonResponse<Void> response = CommonResponse.exception(errorCode.getMessage());
+        return ResponseEntity.status(errorCode.getStatus()).body(response);
     }
 
     // 그 이외의 예외처리
