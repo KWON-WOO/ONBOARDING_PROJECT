@@ -1,6 +1,10 @@
 package com.onboarding_project.domain.user;
 
 import com.onboarding_project.common.CommonResponse;
+import com.onboarding_project.domain.user.dto.CreateUserRequest;
+import com.onboarding_project.domain.user.dto.CreateUserResponse;
+import com.onboarding_project.domain.user.dto.SignInUserRequest;
+import com.onboarding_project.domain.user.dto.SignInUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

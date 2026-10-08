@@ -1,18 +1,16 @@
 package com.onboarding_project.common;
 
+import com.onboarding_project.common.exception.CustomException;
+import com.onboarding_project.common.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -53,36 +51,20 @@ public class JwtUtil {
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
-                        .claim(AUTHORIZATION_KEY, role)
+                        .claim(AUTHORIZATION_KEY, role.name())
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
                         .compact();
     }
 
-    // JWT Cookie에 저장
-    public void addJwtCookie(String token, HttpServletResponse response) {
-        try {
-            // Cookie Value 에는 공백이 불가능해서 encoding 진행
-            token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20");
-
-            Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token);
-            cookie.setPath("/");
-
-            // Response 객체에 Cookie 추가
-            response.addCookie(cookie);
-        } catch(UnsupportedEncodingException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
     // JWT 토큰 substring
     public String substringToken(String tokenValue) {
         if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
-            return tokenValue.substring(7);
+            return tokenValue.substring(BEARER_PREFIX.length());
         }
         logger.error("Not Found Token");
-        throw new NullPointerException("Not Found Token");
+        throw new CustomException(ErrorCode.UN_AUTHENTICATION);
     }
 
     // 토큰 검증
@@ -104,6 +86,16 @@ public class JwtUtil {
 
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
+        }
+    }
+
+    // 토큰에서 사용자 권한 가져오기.
+    public UserRole getUserRole(Claims claims) {
+        String role = claims.get(AUTHORIZATION_KEY, String.class);
+        return UserRole.from(role);
     }
 }

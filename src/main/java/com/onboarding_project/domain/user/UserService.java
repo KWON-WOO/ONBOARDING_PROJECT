@@ -1,15 +1,19 @@
 package com.onboarding_project.domain.user;
 
-import com.onboarding_project.common.CustomException;
+import com.onboarding_project.common.exception.CustomException;
 import com.onboarding_project.common.JwtUtil;
 import com.onboarding_project.common.UserRole;
+import com.onboarding_project.domain.user.dto.CreateUserRequest;
+import com.onboarding_project.domain.user.dto.CreateUserResponse;
+import com.onboarding_project.domain.user.dto.SignInUserRequest;
+import com.onboarding_project.domain.user.dto.SignInUserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.onboarding_project.common.ErrorCode.*;
+import static com.onboarding_project.common.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.onboarding_project.domain.user;
+package com.onboarding_project.domain.user.dto;
 
 import com.onboarding_project.common.UserRole;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.onboarding_project.common;
+package com.onboarding_project.common.exception;
 
 import lombok.Getter;
 

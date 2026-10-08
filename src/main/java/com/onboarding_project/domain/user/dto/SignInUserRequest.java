@@ -1,4 +1,4 @@
-package com.onboarding_project.domain.user;
+package com.onboarding_project.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

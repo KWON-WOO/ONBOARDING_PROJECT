@@ -1,4 +1,4 @@
-package com.onboarding_project.common;
+package com.onboarding_project.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,13 @@ public enum ErrorCode {
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "등록된 사용자가 없습니다."),
 
     MISMATCH_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
+
+    ONLY_OWNER_CAN_CREATE_MENU(HttpStatus.FORBIDDEN, "메뉴 등록은 판매자만 가능합니다."),
+
+    INVALID_TOKEN(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+
+    NOT_FOUND_MENU(HttpStatus.NOT_FOUND, "존재하지 않는 메뉴입니다."),
+
     ;
 
     private final HttpStatus status;

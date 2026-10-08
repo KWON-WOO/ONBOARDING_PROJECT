@@ -29,4 +29,11 @@ public class Menu extends BaseSoftDeleteEntity {
 
     @Column(nullable = false)
     private Integer price;
+
+    public Menu(User user, String name, String description, Integer price) {
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

@@ -1,5 +1,6 @@
-package com.onboarding_project.common;
+package com.onboarding_project.common.exception;
 
+import com.onboarding_project.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CommonResponse<Void>> exception(Exception e) {
         log.error("예외 발생. ", e);
 
-        CommonResponse<Void> response = CommonResponse.exception("요청 본문 형식이 올바르지 않습니다");
+        CommonResponse<Void> response = CommonResponse.exception("서버 내부의 오류가 발생했습니다");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

@@ -1,4 +1,4 @@
-package com.onboarding_project.domain.user;
+package com.onboarding_project.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
