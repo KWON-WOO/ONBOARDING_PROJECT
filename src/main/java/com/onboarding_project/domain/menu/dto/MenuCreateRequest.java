@@ -1,4 +1,4 @@
-package com.onboarding_project.domain.menu;
+package com.onboarding_project.domain.menu.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
