@@ -1,5 +1,7 @@
-package com.onboarding_project.common;
+package com.onboarding_project.common.config;
 
+import com.onboarding_project.common.JwtAuthorizationFilter;
+import com.onboarding_project.common.JwtUtil;
 import com.onboarding_project.common.exception.CustomException;
 import com.onboarding_project.common.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,7 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signup", "/signin").permitAll()
                         .requestMatchers(HttpMethod.GET, "/menu", "/menu/{menuId}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/menu").hasRole("OWNER")
+                        .requestMatchers(HttpMethod.POST, "/menu").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/menu/{menuId}").hasRole("OWNER")
                         .requestMatchers(HttpMethod.DELETE, "/menu/{menuId}").hasRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/order").hasRole("CUSTOMER")

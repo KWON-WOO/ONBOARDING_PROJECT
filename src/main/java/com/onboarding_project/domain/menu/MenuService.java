@@ -1,5 +1,6 @@
 package com.onboarding_project.domain.menu;
 
+import com.onboarding_project.common.UserRole;
 import com.onboarding_project.common.exception.CustomException;
 import com.onboarding_project.common.exception.ErrorCode;
 import com.onboarding_project.domain.menu.dto.MenuCreateRequest;
@@ -28,6 +29,10 @@ public class MenuService {
         User owner = userRepository.findByUsername(username).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER)
         );
+
+        if (owner.getRole() != UserRole.OWNER) {
+            throw new CustomException(ErrorCode.ONLY_OWNER_CAN_CREATE_MENU);
+        }
 
         Menu menu = new Menu(owner, request.getName(), request.getDescription(), request.getPrice());
         Menu savedMenu = menuRepository.save(menu);

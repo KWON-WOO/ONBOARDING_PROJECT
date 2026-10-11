@@ -1,4 +1,4 @@
-package com.onboarding_project.common;
+package com.onboarding_project.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

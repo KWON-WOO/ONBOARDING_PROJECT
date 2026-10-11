@@ -70,6 +70,6 @@ public class MenuController {
         menuService.deleteMenu(username, menuId);
 
         CommonResponse<Void> result = CommonResponse.successNoData(SuccessMessage.MENU_DELETE_SUCCESS);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
